@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "EditorConfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "mgmcdermott.vscode-language-babel",
+    "shinnn.stylelint"
+  ]
+}

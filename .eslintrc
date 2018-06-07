@@ -1,0 +1,13 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "globals": {
+    "document": true,
+    "window": true
+  },
+  "rules": {
+    "comma-dangle": [2, "never"],
+    "no-nested-ternary": [0],
+    "react/prefer-stateless-function": [0]
+  }
+}

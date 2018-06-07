@@ -1,0 +1,11 @@
+{
+  "extends": "stylelint-config-jon-milner",
+  "rules": {
+    "value-list-comma-newline-after": null,
+    "font-family-name-quotes": null,
+    "function-comma-newline-after": null,
+    "function-comma-space-after": null,
+    "function-parentheses-newline-inside": null,
+    "function-parentheses-space-inside": null
+  }
+}

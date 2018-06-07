@@ -1,0 +1,25 @@
+{
+  "short_name": "Momentum",
+  "name": "Momentum Design System",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1e7ec1",
+  "background_color": "#1e7ec1",
+  "display": "browser",
+  "start_url": "index.html?launcher=true"
+}
