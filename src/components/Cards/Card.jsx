@@ -9,8 +9,7 @@ const propTypes = {
   memberTitle: PropTypes.string,
   online: PropTypes.oneOf(['online', 'offline']),
   status: PropTypes.oneOf(['disabled', 'inactive']),
-  theme: PropTypes.oneOf(['green', 'blue']),
-  department: PropTypes.string
+  theme: PropTypes.oneOf(['green', 'blue'])
 };
 
 const defaultProps = {
@@ -19,8 +18,7 @@ const defaultProps = {
   memberTitle: undefined,
   online: undefined,
   status: undefined,
-  theme: undefined,
-  department: undefined
+  theme: undefined
 };
 
 export default class Cards extends React.Component {
@@ -32,8 +30,7 @@ export default class Cards extends React.Component {
       memberName,
       memberStatus,
       memberTitle,
-      theme,
-      department
+      theme
     } = this.props;
 
     return (
@@ -59,7 +56,6 @@ export default class Cards extends React.Component {
             <div className="member__body">
               <h2 className="member__name">{memberName}</h2>
               {memberTitle && <p className="member__title">{memberTitle}</p>}
-              {department && <p className="member__title">{department}</p>}
             </div>
           </div>
         </section>
