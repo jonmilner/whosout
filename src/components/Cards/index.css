@@ -1,7 +1,7 @@
 @import "../../assets/styles/mixins";
 
 body {
-  font-size: calc(6px + (18 - 6) * (100vw - 400px) / (1400 - 400));
+  font-size: calc(6px + (24 - 6) * (100vmin - 320px) / (2200 - 320));
 }
 
 .cards {
@@ -13,67 +13,67 @@ body {
   width: 100vw;
 
   &--layout-max-4 {
-    font-size: 1em;
+    font-size: 1.6em;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
 
   &--layout-max-6 {
-    font-size: 0.9em;
+    font-size: 1.4em;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
 
   &--layout-max-9 {
-    font-size: 0.9em;
+    font-size: 1.4em;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
   }
 
   &--layout-max-12 {
-    font-size: 0.8em;
+    font-size: 1.2em;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
   }
 
   &--layout-max-16 {
-    font-size: 0.8em;
+    font-size: 1.2em;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
   }
 
   &--layout-max-20 {
-    font-size: 0.7em;
+    font-size: 1em;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(4, 1fr);
   }
 
   &--layout-max-25 {
-    font-size: 0.7em;
+    font-size: 1em;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
   }
 
   &--layout-max-30 {
-    font-size: 0.6em;
+    font-size: 0.8em;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(5, 1fr);
   }
 
   &--layout-max-36 {
-    font-size: 0.6em;
+    font-size: 0.8em;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
   }
 
   &--layout-max-42 {
-    font-size: 0.5em;
+    font-size: 0.6em;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(6, 1fr);
   }
 
   &--layout-max-49 {
-    font-size: 0.5em;
+    font-size: 0.6em;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(7, 1fr);
   }
@@ -91,13 +91,13 @@ body {
   }
 
   &--layout-max-72 {
-    font-size: 0.3em;
+    font-size: 0.2em;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(8, 1fr);
   }
 
   &--layout-max-81 {
-    font-size: 0.3em;
+    font-size: 0.2em;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(9, 1fr);
   }
@@ -169,9 +169,9 @@ body {
   content: "";
   display: block;
   flex-shrink: 0;
-  height: 2em;
+  height: 1.75em;
   overflow: hidden;
-  width: 2em;
+  width: 1.75em;
 
   span {
     @mixin screenreader-text;
@@ -183,7 +183,7 @@ body {
 }
 
 .member {
-  --padding: 1.5em;
+  --padding: 1.25em;
   align-items: flex-start;
   display: flex;
   flex: 1;
@@ -249,7 +249,7 @@ body {
   font-size: 1em;
   font-weight: 700;
   line-height: 1;
-  margin-top: 0.5em;
+  margin-top: 0.25em;
   text-shadow: 0 0.05em 0.2em rgba(0, 0, 0, 0.2);
 }
 
