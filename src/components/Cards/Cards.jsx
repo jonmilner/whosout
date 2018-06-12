@@ -17,7 +17,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  filterMembersWithoutStatus: true,
+  filterMembersWithoutStatus: false,
   showOnlineIndicator: true
 };
 
