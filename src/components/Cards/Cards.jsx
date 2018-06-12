@@ -40,7 +40,8 @@ export default class Cards extends React.Component {
       error: null,
       isLoading: false,
       members: [],
-      token: DEFINE_SLACK_TOKEN
+      token: DEFINE_SLACK_TOKEN,
+      fields: [] // : Array<{ userId: int, fieldSet: Array<any> }>
     };
   }
 
@@ -52,9 +53,10 @@ export default class Cards extends React.Component {
   }
 
   getFields(userId) {
-    const { members } = this.state;
-
-    if (this.memberProfilesLoading.find(x => x === userId)) {
+    if (
+      this.memberProfilesLoading.find(x => x === userId) ||
+      this.state.fields.some(x => x.userId === userId)
+    ) {
       return;
     }
 
@@ -63,13 +65,15 @@ export default class Cards extends React.Component {
     fetch(`https://slack.com/api/users.profile.get?token=${this.state.token}&user=${userId}`)
       .then(profileResponse => profileResponse.json())
       .then((response) => {
-        const member = members.find(m => m.id === userId);
-        if (member && member.profile && response && response.profile) {
-          members.find(m => m.id === userId).profile.fields = response.profile.fields;
+        if (response && response.profile) {
+          const newFields = this.state.fields;
+          newFields.push({ userId, fields: response.profile.fields });
+          this.setState({
+            fields: newFields
+          });
         }
 
         this.memberProfilesLoading.splice(this.memberProfilesLoading.indexOf(userId), 1);
-        this.setState({ members });
       })
       .catch((error) => {
         this.memberProfilesLoading.splice(this.memberProfilesLoading.indexOf(userId), 1);
@@ -86,7 +90,7 @@ export default class Cards extends React.Component {
         throw new Error('Something went wrong...');
       })
       .then((data) => {
-        this.setState({ members: data.members, isLoading: false });
+        this.setState({ members: data.members });
         return data.members;
       })
       .catch(error => this.setState({ error, isLoading: false }));
@@ -96,7 +100,9 @@ export default class Cards extends React.Component {
 
   render() {
     const { showOnlineIndicator, filterMembersWithoutStatus } = this.props;
-    const { isLoading, members, error } = this.state;
+    const {
+      isLoading, members, fields, error
+    } = this.state;
 
     const allMembers = members.filter(item =>
       !item.deleted &&
@@ -114,19 +120,22 @@ export default class Cards extends React.Component {
     const preProfileMembers = filterMembersWithoutStatus ? membersWithStatus : allMembers;
 
     preProfileMembers.forEach((member) => {
-      if (!member.profile.fields) {
+      if (!fields.some(x => x.userID === member.id)) {
         this.getFields(member.id);
       }
     });
 
-    const displayedMembers = preProfileMembers.filter(item =>
-      (getQueryVariable('dept')
-        ? item.profile && item.profile.fields
-          ? item.profile.fields.XfB2QXEFQW
-            ? item.profile.fields.XfB2QXEFQW.value === getQueryVariable('dept')
-            : false
-          : false
-        : true));
+    const displayedMembers = preProfileMembers.filter((item) => {
+      if (!getQueryVariable('dept')) return true;
+
+      const userFields = fields.find(x => x.userId === item.id);
+
+      if (!userFields || !userFields.fields) return false;
+
+      if (!userFields.fields.XfB2QXEFQW) return false;
+
+      return userFields.fields.XfB2QXEFQW.value === getQueryVariable('dept');
+    });
 
     if (error) {
       return <p>Error: {error.toString()}</p>;
