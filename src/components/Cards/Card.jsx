@@ -8,8 +8,7 @@ const propTypes = {
   memberStatus: PropTypes.string,
   memberTitle: PropTypes.string,
   online: PropTypes.oneOf(['online', 'offline']),
-  status: PropTypes.oneOf(['disabled', 'inactive']),
-  theme: PropTypes.oneOf(['green', 'blue'])
+  theme: PropTypes.string
 };
 
 const defaultProps = {
@@ -17,20 +16,56 @@ const defaultProps = {
   memberStatus: undefined,
   memberTitle: undefined,
   online: undefined,
-  status: undefined,
   theme: undefined
 };
 
 export default class Cards extends React.Component {
+  getStatus() {
+    if (this.props.memberStatus === 'In a meeting') {
+      return 'meeting';
+    } else if (this.props.memberStatus === 'Working remotely') {
+      return 'remote';
+    } else if (this.props.memberStatus === 'Vacationing') {
+      return 'vacation';
+    }
+    return undefined;
+  }
+
+  getEmoji() {
+    if (this.props.memberStatus === 'In a meeting') {
+      return (
+        <div className="member__status">
+          <span aria-label="In a Meeting" className="member__emoji" role="img">
+            🗓
+          </span>
+          <span className="member__status-text">In a Meeting</span>
+        </div>
+      );
+    } else if (this.props.memberStatus === 'Working remotely') {
+      return (
+        <div className="member__status">
+          <span aria-label="Working remotely" className="member__emoji" role="img">
+            🏠
+          </span>
+          <span className="member__status-text">Remote</span>
+        </div>
+      );
+    } else if (this.props.memberStatus === 'Vacationing') {
+      return (
+        <div className="member__status">
+          <span aria-label="Vacationing" className="member__emoji" role="img">
+            🌴
+          </span>
+          <span className="member__status-text">On Vacation</span>
+        </div>
+      );
+    }
+    return undefined;
+  }
+
   render() {
     const {
-      image,
-      online,
-      status,
-      memberName,
-      memberStatus,
-      memberTitle,
-      theme
+      image, online, memberName, memberStatus, memberTitle, theme
     } = this.props;
 
     return (
@@ -38,21 +73,14 @@ export default class Cards extends React.Component {
         className={classNames({
           card: true,
           [`card--online-${online}`]: online,
-          [`card--status-${status}`]: status,
+          [`card--status-${this.getStatus()}`]: memberStatus,
           [`card--theme-${theme}`]: theme
         })}
       >
         <section className="card__content">
           <div className="member">
             <img className="member__image" alt={memberName} src={image} />
-            <div className="member__header">
-              {online && (
-                <p className="dot">
-                  <span>{online}</span>
-                </p>
-              )}
-              {memberStatus && <p className="member__status">{memberStatus}</p>}
-            </div>
+            {this.getEmoji()}
             <div className="member__body">
               <h2 className="member__name">{memberName}</h2>
               {memberTitle && <p className="member__title">{memberTitle}</p>}

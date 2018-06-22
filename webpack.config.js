@@ -25,6 +25,18 @@ module.exports = (env) => {
         {
           test: /\.css$/,
           use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
+        },
+        {
+          test: /\.(woff(2)?|ttf|eot|otf|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'fonts/'
+              }
+            }
+          ]
         }
       ]
     },

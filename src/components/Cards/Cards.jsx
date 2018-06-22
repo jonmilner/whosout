@@ -13,12 +13,19 @@ const propTypes = {
   // Only show members who are have a status set.
   filterMembersWithoutStatus: PropTypes.bool,
   // Show indicator for who's currently online.
-  showOnlineIndicator: PropTypes.bool
+  showOnlineIndicator: PropTypes.bool,
+  // List of statues
+  statuses: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    emoji: PropTypes.string.isRequired
+  }))
 };
 
 const defaultProps = {
   filterMembersWithoutStatus: false,
-  showOnlineIndicator: true
+  showOnlineIndicator: true,
+  statuses: []
 };
 
 const getQueryVariable = (variable) => {
@@ -99,7 +106,7 @@ export default class Cards extends React.Component {
   memberProfilesLoading = [];
 
   render() {
-    const { showOnlineIndicator, filterMembersWithoutStatus } = this.props;
+    const { filterMembersWithoutStatus, showOnlineIndicator, statuses } = this.props;
     const {
       isLoading, members, fields, error
     } = this.state;
@@ -112,10 +119,7 @@ export default class Cards extends React.Component {
         item.name !== 'subscriptions');
 
     const membersWithStatus = allMembers.filter(item =>
-      item.profile.status_text === 'Working remotely' ||
-        item.profile.status_text === 'Vacationing' ||
-        item.profile.status_text === 'Out sick' ||
-        item.profile.status_text);
+      statuses.find(status => status.name === item.profile.status_text));
 
     const preProfileMembers = filterMembersWithoutStatus ? membersWithStatus : allMembers;
 
@@ -177,38 +181,43 @@ export default class Cards extends React.Component {
       layout = 'cards--layout-max-81';
     }
 
+    // const cardTheme = (member) => {
+    //   statuses.find((status) => {
+    //     if (status.name === member.profile.status_text) {
+    //       return status.color;
+    //     }
+    //     return undefined;
+    //   });
+    // };
+
+    function cardTheme(member) {
+      let obj;
+      return (obj = statuses.find(status => status.name === member.profile.status_text))
+        ? obj.color
+        : '';
+    }
+
     return (
       <ol className={`cards ${layout}`}>
-        {displayedMembers.map(item => (
+        {displayedMembers.map(member => (
           <Card
             {...{
-              image: item.profile.image_512,
-              key: item.id,
+              allStatuses: statuses,
+              image: member.profile.image_512,
+              key: member.id,
               online:
-                showOnlineIndicator && item.presence === 'active'
+                showOnlineIndicator && member.presence === 'active'
                   ? 'online'
-                  : item.presence === 'away'
+                  : member.presence === 'away'
                     ? 'offline'
                     : undefined,
-              status:
-                item.profile.status_text === 'Vacationing' ||
-                item.profile.status_text === 'Out sick'
-                  ? 'disabled'
-                  : undefined,
-              memberName: item.profile.real_name_normalized,
-              memberStatus: item.profile.status_text,
-              memberTitle: item.profile.title,
-              theme:
-                item.profile.status_text === 'Working remotely'
-                  ? 'blue'
-                  : item.profile.status_text === 'Vacationing'
-                    ? 'green'
-                    : item.profile.status_text === 'Out sick'
-                      ? 'orange'
-                      : undefined,
+              memberName: member.profile.real_name_normalized,
+              memberStatus: member.profile.status_text,
+              memberTitle: member.profile.title,
+              theme: cardTheme(member),
               department:
-                item.profile && item.profile.fields && item.profile.fields.XfB2QXEFQW
-                  ? item.profile.fields.XfB2QXEFQW.value
+                member.profile && member.profile.fields && member.profile.fields.XfB2QXEFQW
+                  ? member.profile.fields.XfB2QXEFQW.value
                   : undefined
             }}
           />

@@ -6,7 +6,13 @@ const Home = () => (
   <Page
     content={
       <React.Fragment>
-        <Cards />
+        <Cards
+          statuses={[
+            { name: 'In a meeting', color: 'red', emoji: '🗓' },
+            { name: 'Working remotely', color: 'blue', emoji: '🏠' },
+            { name: 'Vacationing', color: 'green', emoji: '🌴' }
+          ]}
+        />
       </React.Fragment>
     }
   />
